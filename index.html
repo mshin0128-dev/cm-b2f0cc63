@@ -363,6 +363,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
   var openAssignGroups = {};
   var calMonth = null;    // カレンダーの表示月 "YYYY-MM"（null=今月）
   var calSelected = null; // カレンダーで選んでいる日 "YYYY-MM-DD"（null=今日）
+  var dayCardOffset = 0; // 時間割タブ上部の日カードの基準日（今日からの日数）
   var attProgressCache = {};
 
   // ---------------- state ----------------
@@ -625,7 +626,15 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
   }
 
   function dayCardsHtml() {
-    var tomorrow = addDays(TODAY, 1);
+    var base = addDays(TODAY, dayCardOffset);
+    var next = addDays(base, 1);
+    function relLabel(off) {
+      if (off === -1) return "昨日";
+      if (off === 0) return "今日";
+      if (off === 1) return "明日";
+      if (off === 2) return "明後日";
+      return "";
+    }
     function block(label, dateStr) {
       var list = classesOn(dateStr);
       var noteH = holidayUnknownNote(dateStr);
@@ -637,10 +646,10 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
       }
       body += dueOnDateHtml(dateStr);
       return '<div class="card">' +
-        '<div class="day-card-h">' + esc(label) + "　" + esc(formatShortDate(dateStr)) + (noteH ? '<span class="chip warn">' + esc(noteH) + "</span>" : "") + "</div>" +
+        '<div class="day-card-h">' + (label ? esc(label) + "　" : "") + esc(formatShortDate(dateStr)) + (noteH ? '<span class="chip warn">' + esc(noteH) + "</span>" : "") + "</div>" +
         body + "</div>";
     }
-    return '<div class="day-cards">' + block("今日", TODAY) + block("明日", tomorrow) + "</div>";
+    return '<div class="day-cards">' + block(relLabel(dayCardOffset), base) + block(relLabel(dayCardOffset + 1), next) + "</div>";
   }
 
   function timetableHtml() {
@@ -712,7 +721,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     var p = ym.split("-");
     var sel = calSelected || TODAY;
     var first = ym + "-01";
-    var html = '<div class="section-h"><h2>カレンダー</h2></div><div class="card padded">';
+    var html = '<div class="section-h"><h2>カレンダー</h2></div><div class="card padded cal-card">';
     html += '<div class="cal-nav">' +
       '<button type="button" data-act="cal-month" data-delta="-1" aria-label="前の月">' + LEFT_SVG + "</button>" +
       '<span class="cal-title" aria-live="polite">' + Number(p[0]) + "年" + Number(p[1]) + "月</span>" +
@@ -1463,10 +1472,32 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     render();
   }
 
+  // 月・日の前後移動（ボタンとスワイプで共通）
+  function shiftCalMonth(delta) {
+    calMonth = shiftMonth(calMonthStr(), delta);
+    calSelected = TODAY.slice(0, 7) === calMonth ? TODAY : calMonth + "-01";
+    render();
+  }
+  function shiftAttDay(delta) {
+    attViewDate = addDays(todayAttDateStr(), delta);
+    render();
+  }
+  function shiftDayCards(delta) {
+    dayCardOffset += delta;
+    render();
+  }
+
   // ===================================================================
   // click delegation
   // ===================================================================
   function onClick(ev) {
+    // スワイプ確定直後のクリックは無視（科目行・カレンダー日との競合防止）
+    if (swipeClickBlockUntil && Date.now() < swipeClickBlockUntil) {
+      swipeClickBlockUntil = 0;
+      ev.preventDefault();
+      ev.stopPropagation();
+      return;
+    }
     var tb = ev.target.closest(".tab-btn");
     if (tb) { setTab(tb.getAttribute("data-tab")); return; }
     if (ev.target.closest("#settingsBtn")) { openSettingsSheet(); return; }
@@ -1481,9 +1512,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     if (act === "assign-set") { if (!t.disabled) setAssignStatus(t.getAttribute("data-id"), t.getAttribute("data-v")); return; }
     if (act === "cal-month") {
       var delta = Number(t.getAttribute("data-delta"));
-      calMonth = shiftMonth(calMonthStr(), delta);
-      calSelected = TODAY.slice(0, 7) === calMonth ? TODAY : calMonth + "-01";
-      render();
+      shiftCalMonth(delta);
       var nb = document.querySelector('#page-schedule [data-act="cal-month"][data-delta="' + delta + '"]');
       if (nb) nb.focus();
       return;
@@ -1497,7 +1526,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     }
     if (act === "copy-attendance") { copyAttendanceForSato(); return; }
     if (act === "mark-att") { setAttendance(todayAttDateStr(), t.getAttribute("data-course"), t.getAttribute("data-v")); return; }
-    if (act === "att-day") { attViewDate = addDays(todayAttDateStr(), Number(t.getAttribute("data-delta"))); render(); return; }
+    if (act === "att-day") { shiftAttDay(Number(t.getAttribute("data-delta"))); return; }
     if (act === "toggle-group") {
       var g = t.getAttribute("data-group");
       openAssignGroups[g] = !openAssignGroups[g];
@@ -1515,10 +1544,19 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
   });
 
   // ===================================================================
-  // 横スワイプでタブ切替
+  // 横スワイプ：欄の中の前後移動（タブ切替はタップのみ）
+  //   .day-cards → 日 / .cal-card → 月 / #page-att → 出席の日 / それ以外は無効
   // ===================================================================
-  var TAB_ORDER = ["schedule", "assign", "att", "grade"];
-  var swipe = { active: false, decided: false, dx: 0, dy: 0, startX: 0, startY: 0, pointerId: null };
+  var swipe = { active: false, decided: false, dx: 0, dy: 0, startX: 0, startY: 0, pointerId: null, zone: null };
+  var swipeClickBlockUntil = 0;
+
+  function swipeZoneOf(target) {
+    if (!target || !target.closest) return null;
+    if (target.closest(".day-cards")) return "days";
+    if (target.closest(".cal-card")) return "calendar";
+    if (target.closest("#page-att")) return "att";
+    return null;
+  }
 
   function canStartSwipe(x, target) {
     if (sheetOpen) return false;
@@ -1530,7 +1568,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     if (x < 16 || x > window.innerWidth - 16) return false;
     return true;
   }
-  function resetSwipe() { swipe.active = false; swipe.decided = false; swipe.dx = 0; swipe.dy = 0; swipe.pointerId = null; }
+  function resetSwipe() { swipe.active = false; swipe.decided = false; swipe.dx = 0; swipe.dy = 0; swipe.pointerId = null; swipe.zone = null; }
   function trackSwipeMove(x, y) {
     var dx = x - swipe.startX, dy = y - swipe.startY;
     swipe.dx = dx; swipe.dy = dy;
@@ -1538,10 +1576,15 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     return swipe.decided;
   }
   function finishSwipe() {
-    if (swipe.decided) {
-      var i = TAB_ORDER.indexOf(tab);
-      var ni = swipe.dx < 0 ? i + 1 : i - 1;
-      if (ni >= 0 && ni < TAB_ORDER.length) setTab(TAB_ORDER[ni]);
+    if (swipe.decided && swipe.zone) {
+      var delta = swipe.dx < 0 ? 1 : -1;
+      var zone = swipe.zone;
+      swipeClickBlockUntil = Date.now() + 400;
+      resetSwipe();
+      if (zone === "days") shiftDayCards(delta);
+      else if (zone === "calendar") shiftCalMonth(delta);
+      else if (zone === "att") shiftAttDay(delta);
+      return;
     }
     resetSwipe();
   }
@@ -1549,7 +1592,9 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     if (e.touches.length !== 1) { resetSwipe(); return; }
     var t = e.touches[0];
     if (!canStartSwipe(t.clientX, e.target)) { resetSwipe(); return; }
-    swipe.active = true; swipe.decided = false; swipe.startX = t.clientX; swipe.startY = t.clientY;
+    var zone = swipeZoneOf(e.target);
+    if (!zone) { resetSwipe(); return; }
+    swipe.active = true; swipe.decided = false; swipe.startX = t.clientX; swipe.startY = t.clientY; swipe.zone = zone;
   }
   function onTouchMoveSwipe(e) {
     if (!swipe.active || e.touches.length !== 1) return;
