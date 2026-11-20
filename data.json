@@ -1,0 +1,1267 @@
+{
+  "version": "2026.11.20b",
+  "generated_at": "2026-11-20T14:19:21+09:00",
+  "generated_label": "11/20 14:19",
+  "source": {
+    "path_label": "佐藤の授業管理トラッカー",
+    "md_mtime": "2026-11-20T14:10:36+09:00",
+    "assignments_note": "11/13 12:16 KULMS確認"
+  },
+  "attendance_source": {
+    "table_found": true,
+    "rows": 9,
+    "matched": [
+      "math_stat",
+      "steel",
+      "rc",
+      "kenchiku_seisan",
+      "taishin",
+      "undo_kagaku",
+      "tennis",
+      "shoken",
+      "stat_intro"
+    ],
+    "unmatched": [],
+    "note": "11/20 14:10時点。紳さんの申告を受けるたびに佐藤が更新する。森のアプリはこの表を読む。"
+  },
+  "term": {
+    "start": "2026-10-01",
+    "end": "2027-02-06"
+  },
+  "periods": [
+    {
+      "p": 1,
+      "start": "08:45",
+      "end": "10:15"
+    },
+    {
+      "p": 2,
+      "start": "10:30",
+      "end": "12:00"
+    },
+    {
+      "p": 3,
+      "start": "13:15",
+      "end": "14:45"
+    },
+    {
+      "p": 4,
+      "start": "15:00",
+      "end": "16:30"
+    },
+    {
+      "p": 5,
+      "start": "16:45",
+      "end": "18:15"
+    }
+  ],
+  "courses": [
+    {
+      "id": "math_stat",
+      "name": "数理統計",
+      "short": "数理統計",
+      "day": 0,
+      "period": 1,
+      "slot_label": "月1",
+      "intensive": false,
+      "teacher": "杉山",
+      "room": "不明",
+      "priority": null,
+      "att_class": "C",
+      "att_counts": false,
+      "att_note": "主に定期試験（KULMSの課題あり）",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/la_syllabus?lectureNo=61801",
+      "form_url": null,
+      "grading_summary": "定期試験（配点の詳細は授業で指示）",
+      "grading": [
+        {
+          "label": "定期試験",
+          "points": null,
+          "status": "undetermined",
+          "est": null,
+          "basis": "主に定期試験。配点の詳細は授業で指示"
+        }
+      ],
+      "grading_total_known": false,
+      "attendance": {
+        "tracked": true,
+        "present": 0,
+        "absent": 4,
+        "unknown": 2,
+        "present_note": null,
+        "absent_dates": [
+          "2026-10-05",
+          "2026-10-19",
+          "2026-10-26",
+          "2026-11-02"
+        ],
+        "unknown_dates": [
+          "2026-11-09",
+          "2026-11-16"
+        ],
+        "cancelled_dates": [
+          "2026-10-15"
+        ],
+        "note": "10/15休講",
+        "source": "md_table"
+      },
+      "scores": [
+        {
+          "label": "課題1",
+          "score": 2,
+          "max": null,
+          "note": "満点不明"
+        }
+      ],
+      "warn": null
+    },
+    {
+      "id": "steel",
+      "name": "鉄骨構造Ⅱ",
+      "short": "鉄骨Ⅱ",
+      "day": 0,
+      "period": 2,
+      "slot_label": "月2",
+      "intensive": false,
+      "teacher": "不明",
+      "room": "不明",
+      "priority": null,
+      "att_class": "B",
+      "att_counts": false,
+      "att_note": "授業内課題あり（出席は成績に直接入らない）",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/department_syllabus?departmentNo=16&lectureNo=13036",
+      "form_url": null,
+      "grading_summary": "期末80＋演習課題20",
+      "grading": [
+        {
+          "label": "期末試験",
+          "points": 80,
+          "status": "undetermined",
+          "est": null,
+          "basis": "期末前のため未確定"
+        },
+        {
+          "label": "演習課題",
+          "points": 20,
+          "status": "undetermined",
+          "est": null,
+          "basis": "HW2は遅れ提出で減点ありそう、10/15出題分は先生へメール提出で受理未確認、授業内クイズ3回は提出済み"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": true,
+        "present": 5,
+        "absent": 2,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [
+          "2026-10-19",
+          "2026-10-26"
+        ],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": null,
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": null
+    },
+    {
+      "id": "rc",
+      "name": "鉄筋コンクリート構造Ⅱ（RC）",
+      "short": "RC構造Ⅱ",
+      "day": 0,
+      "period": 3,
+      "slot_label": "月3",
+      "intensive": false,
+      "teacher": "不明",
+      "room": "不明",
+      "priority": null,
+      "att_class": "A",
+      "att_counts": true,
+      "att_note": "参加状況10点",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/department_syllabus?departmentNo=16&lectureNo=13035",
+      "form_url": null,
+      "grading_summary": "期末70＋レポート20＋参加状況10",
+      "grading": [
+        {
+          "label": "期末試験",
+          "points": 70,
+          "status": "undetermined",
+          "est": null,
+          "basis": "期末前のため未確定"
+        },
+        {
+          "label": "レポート（演習課題）",
+          "points": 20,
+          "status": "undetermined",
+          "est": null,
+          "basis": "演習1〜6提出済み（5は遅延減点）。点数は不明"
+        },
+        {
+          "label": "参加状況",
+          "points": 10,
+          "status": "estimated",
+          "est": 4.3,
+          "basis": "出席率 3/7 から推定（10×3/7）"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": true,
+        "present": 3,
+        "absent": 4,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [
+          "2026-10-05",
+          "2026-10-19",
+          "2026-11-02",
+          "2026-11-09"
+        ],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": "参加状況10点",
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": "参加状況10点あり。欠席4回（7回中）"
+    },
+    {
+      "id": "kenchiku_seisan",
+      "name": "建築生産Ⅱ",
+      "short": "建築生産Ⅱ",
+      "day": 1,
+      "period": 1,
+      "slot_label": "火1",
+      "intensive": false,
+      "teacher": "不明",
+      "room": "不明",
+      "priority": "最優先: 一級建築士の受験資格に必要",
+      "att_class": "A",
+      "att_counts": true,
+      "att_note": "平常点20＝毎週のフォームが出席票",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/department_syllabus?departmentNo=16&lectureNo=13028",
+      "form_url": "https://docs.google.com/forms/d/e/1FAIpQLSdfLMogN94QSnJTcyMiBMGfCfYe22htuBlANRfHbwBp1czxZw/viewform",
+      "grading_summary": "期末80＋平常点20",
+      "grading": [
+        {
+          "label": "期末試験",
+          "points": 80,
+          "status": "undetermined",
+          "est": null,
+          "basis": "期末前のため未確定"
+        },
+        {
+          "label": "平常点",
+          "points": 20,
+          "status": "estimated",
+          "est": 20.0,
+          "basis": "フォーム提出率 6/6 から推定。現場見学会(12/11)の参加も入る"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": true,
+        "present": 6,
+        "absent": 0,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [],
+        "unknown_dates": [],
+        "cancelled_dates": [
+          "2026-11-03"
+        ],
+        "note": "フォーム提出を出席とする。11/3祝日休講",
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": "平常点20＝毎週のフォームが出席票。授業翌日 水曜23:59まで"
+    },
+    {
+      "id": "onnetsu",
+      "name": "建築温熱環境設計",
+      "short": "温熱環境",
+      "day": 1,
+      "period": 2,
+      "slot_label": "火2",
+      "intensive": false,
+      "teacher": "不明",
+      "room": "不明",
+      "priority": null,
+      "att_class": "C",
+      "att_counts": false,
+      "att_note": "出席不要の扱い",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/department_syllabus?departmentNo=16&lectureNo=13053",
+      "form_url": null,
+      "grading_summary": "期末75＋レポート25",
+      "grading": [
+        {
+          "label": "期末試験",
+          "points": 75,
+          "status": "undetermined",
+          "est": null,
+          "basis": "期末前のため未確定"
+        },
+        {
+          "label": "レポート",
+          "points": 25,
+          "status": "undetermined",
+          "est": null,
+          "basis": "点数は不明"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": false,
+        "present": 0,
+        "absent": 0,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": "出席不要の扱い",
+        "source": "fixed"
+      },
+      "scores": [],
+      "warn": null
+    },
+    {
+      "id": "bibun",
+      "name": "微分積分学続論Ⅱ－微分方程式",
+      "short": "微分方程式",
+      "day": 1,
+      "period": 4,
+      "slot_label": "火4",
+      "intensive": false,
+      "teacher": "髙尾",
+      "room": "不明",
+      "priority": null,
+      "att_class": "C",
+      "att_counts": false,
+      "att_note": "出席不要の扱い",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/la_syllabus?lectureNo=61730",
+      "form_url": null,
+      "grading_summary": "主に定期試験",
+      "grading": [
+        {
+          "label": "定期試験",
+          "points": null,
+          "status": "undetermined",
+          "est": null,
+          "basis": "主に定期試験。配点の詳細は授業で指示"
+        }
+      ],
+      "grading_total_known": false,
+      "attendance": {
+        "tracked": false,
+        "present": 0,
+        "absent": 0,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": "出席不要の扱い",
+        "source": "fixed"
+      },
+      "scores": [],
+      "warn": null
+    },
+    {
+      "id": "kozo_kaiseki",
+      "name": "建築構造解析",
+      "short": "構造解析",
+      "day": 2,
+      "period": 2,
+      "slot_label": "水2",
+      "intensive": false,
+      "teacher": "不明",
+      "room": "不明",
+      "priority": null,
+      "att_class": "C",
+      "att_counts": false,
+      "att_note": "出席不要の扱い",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/department_syllabus?departmentNo=16&lectureNo=13032",
+      "form_url": null,
+      "grading_summary": "期末のみ(100)",
+      "grading": [
+        {
+          "label": "期末試験",
+          "points": 100,
+          "status": "undetermined",
+          "est": null,
+          "basis": "期末前のため未確定"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": false,
+        "present": 0,
+        "absent": 0,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": "出席不要の扱い",
+        "source": "fixed"
+      },
+      "scores": [],
+      "warn": null
+    },
+    {
+      "id": "taishin",
+      "name": "耐震構造",
+      "short": "耐震構造",
+      "day": 2,
+      "period": 3,
+      "slot_label": "水3",
+      "intensive": false,
+      "teacher": "不明",
+      "room": "不明",
+      "priority": null,
+      "att_class": "B",
+      "att_counts": false,
+      "att_note": "演習は休むと出せない（出席は成績に直接入らない）",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/department_syllabus?departmentNo=16&lectureNo=13034",
+      "form_url": null,
+      "grading_summary": "期末80＋授業内演習20",
+      "grading": [
+        {
+          "label": "期末試験",
+          "points": 80,
+          "status": "undetermined",
+          "est": null,
+          "basis": "期末前のため未確定"
+        },
+        {
+          "label": "授業内演習",
+          "points": 20,
+          "status": "estimated",
+          "est": 10.0,
+          "basis": "演習は休むと出せないため出席率で推定。不明1回は除外"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": true,
+        "present": 3,
+        "absent": 3,
+        "unknown": 1,
+        "present_note": null,
+        "absent_dates": [
+          "2026-10-07",
+          "2026-10-14",
+          "2026-11-18"
+        ],
+        "unknown_dates": [
+          "2026-11-11"
+        ],
+        "cancelled_dates": [],
+        "note": null,
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": null
+    },
+    {
+      "id": "undo_kagaku",
+      "name": "運動科学Ⅰ",
+      "short": "運動科学Ⅰ",
+      "day": 2,
+      "period": 4,
+      "slot_label": "水4",
+      "intensive": false,
+      "teacher": "神崎・森山",
+      "room": "不明",
+      "priority": null,
+      "att_class": "B",
+      "att_counts": false,
+      "att_note": "小テストは授業内（出席は成績に直接入らない）",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/la_syllabus?lectureNo=62187",
+      "form_url": null,
+      "grading_summary": "平常点50（小テスト4〜5回）＋最終週テスト50",
+      "grading": [
+        {
+          "label": "小テスト1回目（自己採点）",
+          "points": 10,
+          "status": "estimated",
+          "est": 9.0,
+          "basis": "自己採点 9/10くらい（11/11受験済み）"
+        },
+        {
+          "label": "小テスト残り（2回目以降）",
+          "points": 40,
+          "status": "undetermined",
+          "est": null,
+          "basis": "まだ実施・未確定"
+        },
+        {
+          "label": "最終週テスト",
+          "points": 50,
+          "status": "undetermined",
+          "est": null,
+          "basis": "11/25(水)4限に実施予定。未確定"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": true,
+        "present": 7,
+        "absent": 0,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": null,
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": null
+    },
+    {
+      "id": "tennis",
+      "name": "スポーツ実習ⅠB［テニス］",
+      "short": "テニス",
+      "day": 3,
+      "period": 1,
+      "slot_label": "木1",
+      "intensive": false,
+      "teacher": "野田",
+      "room": "不明",
+      "priority": null,
+      "att_class": "A",
+      "att_counts": true,
+      "att_note": "出席状況＋取り組みの積極性で総合評価",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/la_syllabus?lectureNo=64260",
+      "form_url": null,
+      "grading_summary": "配点不明（出席状況＋取り組みの積極性）",
+      "grading": [
+        {
+          "label": "出席状況＋取り組みの積極性（配点不明）",
+          "points": null,
+          "status": "undetermined",
+          "est": null,
+          "basis": "出席 3/7。欠席4回。欠席上限はシラバスに記載なし"
+        }
+      ],
+      "grading_total_known": false,
+      "attendance": {
+        "tracked": true,
+        "present": 3,
+        "absent": 4,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [
+          "2026-10-01",
+          "2026-10-08",
+          "2026-10-22",
+          "2026-11-19"
+        ],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": "10/1・10/8は履修登録前",
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": "出席で総合評価。欠席4回（上限はシラバスに記載なし）"
+    },
+    {
+      "id": "shoken",
+      "name": "証券投資と企業活動",
+      "short": "証券投資",
+      "day": 3,
+      "period": 2,
+      "slot_label": "木2",
+      "intensive": false,
+      "teacher": "川北・脇屋",
+      "room": "不明",
+      "priority": null,
+      "att_class": "A",
+      "att_counts": true,
+      "att_note": "授業参加・貢献40点（質問・発言も評価）",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/la_syllabus?lectureNo=64338",
+      "form_url": null,
+      "grading_summary": "レポート60＋授業参加・貢献40",
+      "grading": [
+        {
+          "label": "レポート",
+          "points": 60,
+          "status": "undetermined",
+          "est": null,
+          "basis": "点数は不明"
+        },
+        {
+          "label": "授業参加・貢献",
+          "points": 40,
+          "status": "estimated",
+          "est": 28.6,
+          "basis": "質問・発言も評価されるので出席率だけの目安（上限寄り）"
+        }
+      ],
+      "grading_total_known": true,
+      "attendance": {
+        "tracked": true,
+        "present": 5,
+        "absent": 2,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [
+          "2026-10-08",
+          "2026-11-19"
+        ],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": "参加・貢献40%",
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": "授業参加・貢献40%。欠席2回"
+    },
+    {
+      "id": "stat_intro",
+      "name": "統計入門",
+      "short": "統計入門",
+      "day": 4,
+      "period": 1,
+      "slot_label": "金1",
+      "intensive": false,
+      "teacher": "植嶋",
+      "room": "不明",
+      "priority": null,
+      "att_class": "B",
+      "att_counts": false,
+      "att_note": "出席自体は評価外。RP・クイズが毎回",
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": "https://www.k.kyoto-u.ac.jp/external/open_syllabus/la_syllabus?lectureNo=63762",
+      "form_url": null,
+      "grading_summary": "期末・小テスト・レポートなど（配点不明）",
+      "grading": [
+        {
+          "label": "期末・小テスト・レポートなど（配点不明）",
+          "points": null,
+          "status": "undetermined",
+          "est": null,
+          "basis": "第6回リアクションペーパーは出し忘れ（11/17締切、遅れ提出できるか要確認）。中間レポート(12/4)は未提出。他のRP・クイズは提出済み"
+        }
+      ],
+      "grading_total_known": false,
+      "attendance": {
+        "tracked": true,
+        "present": 1,
+        "absent": 0,
+        "unknown": 5,
+        "present_note": null,
+        "absent_dates": [],
+        "unknown_dates": [
+          "2026-10-16",
+          "2026-10-23",
+          "2026-10-28",
+          "2026-11-06",
+          "2026-11-13"
+        ],
+        "cancelled_dates": [
+          "2026-10-02",
+          "2026-10-30",
+          "2026-11-20"
+        ],
+        "note": "出席は評価外。10/2・10/30・11/20休講、10/28は補講",
+        "source": "md_table"
+      },
+      "scores": [],
+      "warn": null
+    },
+    {
+      "id": "tokubetsu",
+      "name": "特別研究（卒論）",
+      "short": "特別研究",
+      "day": null,
+      "period": null,
+      "slot_label": "集中",
+      "intensive": true,
+      "teacher": "不明",
+      "room": "不明",
+      "priority": null,
+      "att_class": null,
+      "att_counts": false,
+      "att_note": null,
+      "absence_limit": "シラバスに記載なし",
+      "syllabus_url": null,
+      "form_url": null,
+      "grading_summary": "評価方法は記録なし",
+      "grading": [
+        {
+          "label": "評価方法は記録なし",
+          "points": null,
+          "status": "undetermined",
+          "est": null,
+          "basis": "記録なし"
+        }
+      ],
+      "grading_total_known": false,
+      "attendance": {
+        "tracked": false,
+        "present": 0,
+        "absent": 0,
+        "unknown": 0,
+        "present_note": null,
+        "absent_dates": [],
+        "unknown_dates": [],
+        "cancelled_dates": [],
+        "note": "出席の記録なし（集中講義）",
+        "source": "fixed"
+      },
+      "scores": [],
+      "warn": null
+    }
+  ],
+  "exceptions": [
+    {
+      "date": "2026-10-02",
+      "course_id": "stat_intro",
+      "type": "cancel",
+      "label": "休講",
+      "note": "1/20に振替",
+      "time": null
+    },
+    {
+      "date": "2026-10-15",
+      "course_id": null,
+      "type": "swap_day",
+      "label": "月曜授業の振替日",
+      "note": null,
+      "weekday_as": 0
+    },
+    {
+      "date": "2026-10-15",
+      "course_id": "math_stat",
+      "type": "cancel",
+      "label": "休講",
+      "note": null,
+      "time": null
+    },
+    {
+      "date": "2026-10-28",
+      "course_id": "stat_intro",
+      "type": "makeup",
+      "label": "補講（第4回）",
+      "note": null,
+      "time": "18:30-20:00"
+    },
+    {
+      "date": "2026-10-30",
+      "course_id": "stat_intro",
+      "type": "cancel",
+      "label": "休講",
+      "note": null,
+      "time": null
+    },
+    {
+      "date": "2026-11-03",
+      "course_id": null,
+      "type": "holiday_off",
+      "label": "祝日（文化の日）で授業なし",
+      "note": "火曜の授業は休み",
+      "time": null
+    },
+    {
+      "date": "2026-11-20",
+      "course_id": "stat_intro",
+      "type": "cancel",
+      "label": "休講",
+      "note": "NF（11月祭）のため",
+      "time": null
+    },
+    {
+      "date": "2026-11-23",
+      "course_id": null,
+      "type": "holiday_unknown",
+      "label": "祝日（勤労感謝の日）",
+      "note": "祝日。授業があるかは未確認",
+      "time": null
+    },
+    {
+      "date": "2026-11-25",
+      "course_id": "undo_kagaku",
+      "type": "test",
+      "label": "授業内テスト（4限）",
+      "note": null,
+      "time": null
+    },
+    {
+      "date": "2026-12-11",
+      "course_id": "kenchiku_seisan",
+      "type": "event",
+      "label": "現場見学会（平常点に入る）",
+      "note": null,
+      "time": null
+    },
+    {
+      "date": "2027-01-11",
+      "course_id": null,
+      "type": "holiday_unknown",
+      "label": "祝日（成人の日）",
+      "note": "祝日。授業があるかは未確認",
+      "time": null
+    },
+    {
+      "date": "2027-01-16",
+      "course_id": "stat_intro",
+      "type": "cancel",
+      "label": "休講",
+      "note": "共通テスト前日",
+      "time": null
+    },
+    {
+      "date": "2027-01-20",
+      "course_id": "stat_intro",
+      "type": "makeup",
+      "label": "振替（第13回）",
+      "note": "10/2休講分の振替。時限未確認",
+      "time": null
+    },
+    {
+      "date": "2027-01-29",
+      "course_id": "stat_intro",
+      "type": "test",
+      "label": "最終テスト（予定）",
+      "note": null,
+      "time": null
+    },
+    {
+      "date": "2027-02-11",
+      "course_id": null,
+      "type": "holiday_unknown",
+      "label": "祝日",
+      "note": "祝日。授業があるかは未確認",
+      "time": null
+    }
+  ],
+  "assignments": [
+    {
+      "id": "accd8483e71f",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "第2回リアクションペーパー（KULMS課題）",
+      "due": "2026-10-20T23:30:00+09:00",
+      "due_label": "10/20(火) 23:30",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済み（10/20 1:26）",
+      "kind": "report",
+      "source": "table"
+    },
+    {
+      "id": "55f8f54318c3",
+      "course_id": "rc",
+      "course": "RC",
+      "title": "演習課題2－志賀マップと耐震壁の配置計画",
+      "due": "2026-10-22T13:15:00+09:00",
+      "due_label": "10/22(木) 13:15",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済み（10/21 3:25、KULMSで確認）",
+      "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "d003582cc00d",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "統計入門クイズ02（KULMSテスト・クイズ）",
+      "due": "2026-10-23T08:30:00+09:00",
+      "due_label": "10/23(金) 8:30",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済み（10/20 1:28）",
+      "kind": "quiz",
+      "source": "table"
+    },
+    {
+      "id": "c3a69296e4b0",
+      "course_id": "rc",
+      "course": "RC",
+      "title": "演習課題3－耐震壁の弾性変形特性と等価開口周比",
+      "due": "2026-10-26T13:15:00+09:00",
+      "due_label": "10/26(月) 13:15",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済",
+      "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "85d0aaa40a22",
+      "course_id": "steel",
+      "course": "鉄骨構造Ⅱ",
+      "title": "10/15出題分（名称未確認、KULMSには未掲載）",
+      "due": "2026-10-26T23:59:00+09:00",
+      "due_label": "10/26(月) 時刻未確認",
+      "in_class": false,
+      "status": "unknown",
+      "status_label": "メールで提出（受理は未確認）",
+      "kind": "other",
+      "source": "table"
+    },
+    {
+      "id": "749d60e03bbb",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "第3回リアクションペーパー（KULMS課題）",
+      "due": "2026-10-27T23:30:00+09:00",
+      "due_label": "10/27(火) 23:30",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済（10/27 10:27）",
+      "kind": "report",
+      "source": "table"
+    },
+    {
+      "id": "3fc0f3ffd60b",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "統計入門クイズ03（KULMSテスト・クイズ）",
+      "due": "2026-10-30T23:30:00+09:00",
+      "due_label": "10/30(金) 23:30",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済（10/27 10:27、再提出10/29 12:16）",
+      "kind": "quiz",
+      "source": "table"
+    },
+    {
+      "id": "c6f719c3eb21",
+      "course_id": "math_stat",
+      "course": "数理統計",
+      "title": "課題1（KULMSテスト・クイズ）",
+      "due": "2026-11-01T23:55:00+09:00",
+      "due_label": "11/1(日) 23:55",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済（11/1 23:46、KULMS確認、スコア2）",
+      "kind": "quiz",
+      "source": "table"
+    },
+    {
+      "id": "faf409b3dcf2",
+      "course_id": "rc",
+      "course": "RC",
+      "title": "演習課題４－耐震壁の許容水平せん断耐力",
+      "due": "2026-11-02T13:15:00+09:00",
+      "due_label": "11/2(月) 13:15",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "返却済み（KULMS確認、11/12）",
+      "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "a1c150e6170b",
+      "course_id": "rc",
+      "course": "RC",
+      "title": "演習課題５－浮き上がり基礎回転する耐震壁の終局耐力",
+      "due": "2026-11-09T13:15:00+09:00",
+      "due_label": "11/9(月) 13:15",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済・受理（遅延減点、メール。KULMS上はCLOSED・未開始表示）",
+      "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "d0dd5e720003",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "第5回リアクションペーパー（KULMS課題）",
+      "due": "2026-11-10T23:30:00+09:00",
+      "due_label": "11/10(火) 23:30",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済（KULMS 11/10 18:42）",
+      "kind": "report",
+      "source": "table"
+    },
+    {
+      "id": "7698b7395a5c",
+      "course_id": "undo_kagaku",
+      "course": "運動科学Ⅰ",
+      "title": "授業内小テスト（テスト・クイズ-1回目）",
+      "due": "2026-11-11T16:30:00+09:00",
+      "due_label": "11/11(水) 授業内",
+      "in_class": true,
+      "status": "submitted",
+      "status_label": "提出済（KULMS 11/11 16:24、紳さん申告と一致）",
+      "kind": "quiz",
+      "source": "table"
+    },
+    {
+      "id": "7f3634cbdb91",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "統計入門クイズ05（KULMSテスト・クイズ）",
+      "due": "2026-11-13T08:30:00+09:00",
+      "due_label": "11/13(金) 8:30",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済（KULMS 11/10 18:44。11/13時点で受験可能リストからは外れた）",
+      "kind": "quiz",
+      "source": "table"
+    },
+    {
+      "id": "231176dc8054",
+      "course_id": "steel",
+      "course": "鉄骨構造Ⅱ",
+      "title": "HW2（紙提出）",
+      "due": "2026-11-16T10:30:00+09:00",
+      "due_label": "11/16(月) 10:30（暫定）",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済み（11/16 紳さん申告、遅れ提出で減点ありそう）",
+      "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "d327be166492",
+      "course_id": "rc",
+      "course": "RC",
+      "title": "演習課題６－プレストレストコンクリート建築物",
+      "due": "2026-11-16T13:15:00+09:00",
+      "due_label": "11/16(月) 13:15",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済み（11/16 12:59 紳さん申告）",
+      "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "fcf395275ef6",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "第6回リアクションペーパー（KULMS課題）",
+      "due": "2026-11-17T23:30:00+09:00",
+      "due_label": "11/17(火) 23:30",
+      "in_class": false,
+      "status": "missed",
+      "status_label": "出し忘れ・締切超過（11/19 紳さん申告。遅れ提出できるかKULMSで要確認）",
+      "kind": "report",
+      "source": "table"
+    },
+    {
+      "id": "1748bc2ed664",
+      "course_id": "kenchiku_seisan",
+      "course": "建築生産Ⅱ",
+      "title": "質問・コメント票フォーム（11/17分）",
+      "due": "2026-11-18T23:59:00+09:00",
+      "due_label": "11/18(水) 23:59",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済み（11/19 紳さん申告）",
+      "kind": "form",
+      "source": "table"
+    },
+    {
+      "id": "f24511c58363",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "統計入門クイズ06（KULMSテスト・クイズ）",
+      "due": "2026-11-20T08:30:00+09:00",
+      "due_label": "11/20(金) 8:30",
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "提出済み（11/20申告）",
+      "kind": "quiz",
+      "source": "table"
+    },
+    {
+      "id": "de0d4033aa72",
+      "course_id": "undo_kagaku",
+      "course": "運動科学Ⅰ",
+      "title": "授業内テスト（来週と申告）",
+      "due": "2026-11-25T15:00:00+09:00",
+      "due_label": "11/25(水) 4限 授業内（確定）",
+      "in_class": true,
+      "status": "open",
+      "status_label": "未受験",
+      "kind": "test",
+      "source": "table"
+    },
+    {
+      "id": "2ccf12ded4be",
+      "course_id": "kenchiku_seisan",
+      "course": "建築生産Ⅱ",
+      "title": "質問・コメント票フォーム（11/24分）",
+      "due": "2026-11-25T23:59:00+09:00",
+      "due_label": "11/25(水) 23:59",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出",
+      "kind": "form",
+      "source": "table"
+    },
+    {
+      "id": "900a0d96692d",
+      "course_id": "math_stat",
+      "course": "数理統計",
+      "title": "課題2（KULMSテスト・クイズ）",
+      "due": "2026-11-29T23:55:00+09:00",
+      "due_label": "11/29(日) 23:55",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出（11/13確認で公開・受験可能）",
+      "kind": "quiz",
+      "source": "table"
+    },
+    {
+      "id": "2640cdea8d54",
+      "course_id": "steel",
+      "course": "鉄骨構造Ⅱ",
+      "title": "HW3（紙提出、11/16出題）",
+      "due": "2026-11-30T10:30:00+09:00",
+      "due_label": "11/30(月) 10:30（暫定・正確な締切は未確認）",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出",
+      "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "2bf4f7d93e33",
+      "course_id": "kenchiku_seisan",
+      "course": "建築生産Ⅱ",
+      "title": "質問・コメント票フォーム（12/1分）",
+      "due": "2026-12-02T23:59:00+09:00",
+      "due_label": "12/2(水) 23:59",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出",
+      "kind": "form",
+      "source": "table"
+    },
+    {
+      "id": "79cdc6723069",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "中間レポート（KULMS課題）",
+      "due": "2026-12-04T23:30:00+09:00",
+      "due_label": "12/4(金) 23:30",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出（11/13 8:45公開、OPEN。PDF提出・再提出可）",
+      "kind": "report",
+      "source": "table"
+    },
+    {
+      "id": "798366cd6b41",
+      "course_id": "kenchiku_seisan",
+      "course": "建築生産Ⅱ",
+      "title": "質問・コメント票フォーム（12/8分）",
+      "due": "2026-12-09T23:59:00+09:00",
+      "due_label": "12/9(水) 23:59",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出",
+      "kind": "form",
+      "source": "table"
+    },
+    {
+      "id": "65ee15db185e",
+      "course_id": "rc",
+      "course": "鉄筋コンクリート構造Ⅱ（RC）",
+      "title": "演習課題1－せん断設計（10/12提出、KULMSで返却済み）",
+      "due": null,
+      "due_label": null,
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "演習課題1－せん断設計（10/12提出、KULMSで返却済み）",
+      "kind": "homework",
+      "source": "done_list"
+    },
+    {
+      "id": "c2f77ae6f499",
+      "course_id": "steel",
+      "course": "鉄骨構造Ⅱ",
+      "title": "10/5 授業内課題（作業完了、提出は未確認）／10/15 授業内クイズ実施",
+      "due": null,
+      "due_label": null,
+      "in_class": false,
+      "status": "unknown",
+      "status_label": "10/5 授業内課題（作業完了、提出は未確認）／10/15 授業内クイズ実施",
+      "kind": "quiz",
+      "source": "done_list"
+    },
+    {
+      "id": "493cb3c2fe19",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "第1回感想・クイズ01 提出",
+      "due": null,
+      "due_label": null,
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "第1回感想・クイズ01 提出",
+      "kind": "quiz",
+      "source": "done_list"
+    },
+    {
+      "id": "63b3804136a0",
+      "course_id": "kenchiku_seisan",
+      "course": "建築生産Ⅱ",
+      "title": "フォーム 10/6・10/13・10/20 提出",
+      "due": null,
+      "due_label": null,
+      "in_class": false,
+      "status": "submitted",
+      "status_label": "フォーム 10/6・10/13・10/20 提出",
+      "kind": "form",
+      "source": "done_list"
+    }
+  ],
+  "weekly": [
+    {
+      "course_id": "kenchiku_seisan",
+      "title": "建築生産Ⅱ 質問・コメント票（フォーム）",
+      "rule": "火曜の授業の翌日 水曜 23:59 締切。休講・祝日の週はなし",
+      "submitted_count": 6,
+      "due_count": 6,
+      "url": "https://docs.google.com/forms/d/e/1FAIpQLSdfLMogN94QSnJTcyMiBMGfCfYe22htuBlANRfHbwBp1czxZw/viewform",
+      "note": "佐藤の集計（6/6）を優先"
+    }
+  ],
+  "events": [
+    {
+      "date": "2026-11-25",
+      "course_id": "undo_kagaku",
+      "title": "運動科学Ⅰ 授業内テスト（4限）"
+    },
+    {
+      "date": "2026-12-11",
+      "course_id": "kenchiku_seisan",
+      "title": "建築生産Ⅱ 現場見学会（平常点に入る）"
+    },
+    {
+      "date": "2027-01-29",
+      "course_id": "stat_intro",
+      "title": "統計入門 最終テスト（予定）"
+    }
+  ],
+  "unread_from_md": [
+    "教室（全科目「不明」。mdに記載なし）",
+    "欠席の上限（全科目「シラバスに記載なし」）",
+    "数理統計・微分方程式・テニス・統計入門の配点の詳細（シラバスに配点が明記されていない）"
+  ]
+}
