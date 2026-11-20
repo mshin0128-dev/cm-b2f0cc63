@@ -245,6 +245,51 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
 .grade-item .gi-head span:last-child { flex: none; white-space: nowrap; }
 .grade-item .gi-basis { color: var(--sub); margin-top: 2px; overflow-wrap: anywhere; }
 .grade-legend { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 0 2px; }
+.grade-group-h { margin: 16px 0 0; font-size: 12px; font-weight: 700; color: var(--sub); letter-spacing: .04em; }
+.grade-group-h:first-child { margin-top: 8px; }
+.grade-group-h + .grade-item { border-top: 0; }
+.grade-item .gi-progress { margin-top: 4px; font-weight: 700; color: var(--accent); overflow-wrap: anywhere; }
+.grade-item .gi-progress-sub { color: var(--sub); overflow-wrap: anywhere; }
+
+/* 課題の編集 */
+.a-actions { flex: none; display: flex; align-items: flex-start; gap: 8px; padding-top: 2px; }
+.mini-btn { flex: none; min-height: 32px; padding: 0 8px; border-radius: 8px; font-size: 12.5px; font-weight: 600; border: 1px solid var(--border); background: var(--card); color: var(--sub); }
+.mini-btn:active { transform: scale(0.97); }
+@media (hover: hover) and (pointer: fine) {
+  .mini-btn:hover { background: var(--soft); color: var(--accent); }
+  .cal-day:hover { background: var(--soft); }
+}
+.status-line { display: flex; justify-content: space-between; gap: 8px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 13.5px; }
+.status-line:first-of-type { border-top: 0; }
+.status-line span:first-child { color: var(--sub); }
+.status-line span:last-child { font-weight: 700; text-align: right; }
+.sheet .btn-col { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+
+/* カレンダー */
+.cal-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.cal-nav .cal-title { font-size: 15px; font-weight: 700; }
+.cal-nav button { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--soft); color: var(--accent); display: grid; place-items: center; }
+.cal-nav button svg { width: 16px; height: 16px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.cal-dow { font-size: 10.5px; font-weight: 700; color: var(--sub); text-align: center; padding: 0 0 4px; }
+.cal-day { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 56px; padding: 4px 0; border-radius: 8px; background: transparent; }
+.cal-day.blank { pointer-events: none; }
+.cal-num { width: 24px; height: 24px; line-height: 24px; border-radius: 50%; font-size: 13px; font-weight: 600; text-align: center; }
+.cal-day.today .cal-num { background: var(--accent); color: #fff; font-weight: 800; }
+.cal-day.selected { box-shadow: inset 0 0 0 2px var(--accent); }
+.cal-day.weekend .cal-num { color: var(--sub); }
+.cal-day.today.weekend .cal-num { color: #fff; }
+.cal-mk { display: flex; align-items: center; gap: 2px; font-size: 10px; font-weight: 700; line-height: 1.2; color: var(--sub); white-space: nowrap; }
+.cal-mk i { width: 6px; height: 6px; border-radius: 50%; flex: none; background: currentColor; }
+.cal-mk.k-off { color: var(--sub); }
+.cal-mk.k-test { color: var(--warn); }
+.cal-mk.k-makeup { color: var(--accent); }
+.cal-mk.k-event { color: var(--ok); }
+.cal-mk.k-holiday { color: var(--danger); }
+.cal-detail-h { font-size: 12.5px; font-weight: 700; color: var(--sub); padding: 16px 0 8px; margin-top: 8px; border-top: 1px solid var(--border); }
+.cal-detail .row { padding: 8px 0; }
+.cal-detail .row:first-child { border-top: 0; }
+.cal-detail .empty { padding: 8px 0 0; text-align: left; }
 </style>
 </head>
 <body>
@@ -311,10 +356,13 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
   var attViewDate = null; // 出席タブで選んでいる日付（null=todayYmd）
   var sheetOpen = false;
   var openAssignGroups = {};
+  var calMonth = null;    // カレンダーの表示月 "YYYY-MM"（null=今月）
+  var calSelected = null; // カレンダーで選んでいる日 "YYYY-MM-DD"（null=今日）
+  var attProgressCache = {};
 
   // ---------------- state ----------------
   function loadState() {
-    var empty = { submitted: {}, attendance: {}, theme: "system" };
+    var empty = { submitted: {}, attendance: {}, statusFix: {}, theme: "system" };
     try {
       var raw = localStorage.getItem(STORE_KEY);
       if (!raw) return empty;
@@ -322,6 +370,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
       if (!s || typeof s !== "object") return empty;
       if (!s.submitted || typeof s.submitted !== "object") s.submitted = {};
       if (!s.attendance || typeof s.attendance !== "object") s.attendance = {};
+      if (!s.statusFix || typeof s.statusFix !== "object") s.statusFix = {};
       if (!s.theme) s.theme = "system";
       return s;
     } catch (e) {
@@ -435,10 +484,20 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     return null;
   }
 
+  var STATUS_FIX_VALUES = { submitted: 1, missed: 1, open: 1 };
   function assignmentEffective(a) {
-    if (a.status === "submitted") return { status: "submitted", by: "sato" };
+    var fix = state.statusFix[a.id];
+    if (fix && STATUS_FIX_VALUES[fix]) return { status: fix, by: "app" };
     if (state.submitted[a.id]) return { status: "submitted", by: "app" };
     return { status: a.status, by: "sato" };
+  }
+  function statusLabel(s) {
+    return s === "submitted" ? "提出済み" : s === "missed" ? "出し忘れ" : s === "unknown" ? "要確認" : "未完了";
+  }
+  function assignmentById(id) {
+    if (!DATA) return null;
+    for (var i = 0; i < DATA.assignments.length; i++) { if (DATA.assignments[i].id === id) return DATA.assignments[i]; }
+    return null;
   }
 
   function remainInfo(dueIso) {
@@ -516,6 +575,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     var html = "";
     html += dayCardsHtml();
     html += timetableHtml();
+    html += calendarHtml();
     html += intensiveHtml();
     html += upcomingExceptionsHtml();
     return html;
@@ -607,6 +667,103 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     return html;
   }
 
+  // ---------------- カレンダー ----------------
+  var CAL_KINDS = {
+    cancel: { k: "off", t: "休", name: "休講" },
+    holiday_off: { k: "off", t: "休", name: "休講" },
+    test: { k: "test", t: "テ", name: "テスト" },
+    makeup: { k: "makeup", t: "振", name: "振替・補講" },
+    swap_day: { k: "makeup", t: "振", name: "振替" },
+    event: { k: "event", t: "行", name: "イベント" },
+    holiday_unknown: { k: "holiday", t: "祝", name: "祝日" }
+  };
+  function calMonthStr() { return calMonth || TODAY.slice(0, 7); }
+  function shiftMonth(ym, delta) {
+    var p = ym.split("-");
+    var y = Number(p[0]), m = Number(p[1]) - 1 + delta;
+    y += Math.floor(m / 12);
+    m = ((m % 12) + 12) % 12;
+    return y + "-" + (m < 9 ? "0" : "") + (m + 1);
+  }
+  function calMarkers(dateStr) {
+    var seen = {}, out = [];
+    exceptionsOn(dateStr).forEach(function (e) {
+      var kd = CAL_KINDS[e.type];
+      if (!kd || seen[kd.k]) return;
+      seen[kd.k] = true;
+      out.push(kd);
+    });
+    return out;
+  }
+  function dueOpenOn(dateStr) {
+    return DATA.assignments.filter(function (a) {
+      if (!a.due) return false;
+      var s = assignmentEffective(a).status;
+      return ymd(new Date(a.due)) === dateStr && s !== "submitted";
+    });
+  }
+  function calendarHtml() {
+    var ym = calMonthStr();
+    var p = ym.split("-");
+    var sel = calSelected || TODAY;
+    var first = ym + "-01";
+    var html = '<div class="section-h"><h2>カレンダー</h2></div><div class="card padded">';
+    html += '<div class="cal-nav">' +
+      '<button type="button" data-act="cal-month" data-delta="-1" aria-label="前の月">' + LEFT_SVG + "</button>" +
+      '<span class="cal-title" aria-live="polite">' + Number(p[0]) + "年" + Number(p[1]) + "月</span>" +
+      '<button type="button" data-act="cal-month" data-delta="1" aria-label="次の月">' + RIGHT_SVG + "</button>" +
+      "</div>";
+    html += '<div class="cal-grid">';
+    DOW_LABELS.forEach(function (d) { html += '<div class="cal-dow" aria-hidden="true">' + d + "</div>"; });
+    var offset = weekdayMon0(first);
+    for (var i = 0; i < offset; i++) html += '<div class="cal-day blank" aria-hidden="true"></div>';
+    var d = first;
+    while (d.slice(0, 7) === ym) {
+      var wd = weekdayMon0(d);
+      var mks = calMarkers(d);
+      var cls = "cal-day" + (d === TODAY ? " today" : "") + (d === sel ? " selected" : "") + (wd >= 5 ? " weekend" : "");
+      var aria = formatShortDate(d) + (d === TODAY ? " 今日" : "") + (mks.length ? " " + mks.map(function (m) { return m.name; }).join("・") : "");
+      html += '<button type="button" class="' + cls + '" data-act="cal-day" data-date="' + d + '" aria-pressed="' + (d === sel ? "true" : "false") + '" aria-label="' + esc(aria) + '">' +
+        '<span class="cal-num" aria-hidden="true">' + Number(d.slice(8, 10)) + "</span>";
+      mks.slice(0, 2).forEach(function (m) {
+        html += '<span class="cal-mk k-' + m.k + '" aria-hidden="true"><i></i>' + m.t + "</span>";
+      });
+      html += "</button>";
+      d = addDays(d, 1);
+    }
+    html += "</div>";
+    html += calDetailHtml(sel);
+    html += "</div>";
+    return html;
+  }
+  function calDetailHtml(dateStr) {
+    var exc = exceptionsOn(dateStr);
+    var dues = dueOpenOn(dateStr);
+    var html = '<div class="cal-detail"><div class="cal-detail-h">' + esc(formatShortDate(dateStr)) + (dateStr === TODAY ? "　今日" : "") + "</div>";
+    if (!exc.length && !dues.length) {
+      html += '<div class="empty">予定はありません</div></div>';
+      return html;
+    }
+    exc.forEach(function (e) {
+      var c = courseById(e.course_id);
+      var kd = CAL_KINDS[e.type];
+      var title = (c ? c.short + " " : "") + e.label;
+      var meta = [];
+      if (e.time) meta.push(e.time);
+      if (e.note) meta.push(e.note);
+      html += '<div class="row"><div class="grow"><div class="row-title" style="font-size:13.5px">' + esc(title) + "</div>" +
+        (meta.length ? '<div class="row-meta">' + esc(meta.join("　")) + "</div>" : "") + "</div>" +
+        (kd ? '<span class="cal-mk k-' + kd.k + '" style="padding-top:4px"><i></i>' + esc(kd.name) + "</span>" : "") + "</div>";
+    });
+    dues.forEach(function (a) {
+      var c = courseById(a.course_id);
+      html += '<div class="row"><div class="grow"><div class="row-title" style="font-size:13.5px">締切: ' + esc((c ? c.short + " " : "") + a.title) + "</div>" +
+        '<div class="row-meta">' + esc(a.due_label || "") + "　" + statusLabel(assignmentEffective(a).status) + "</div></div></div>";
+    });
+    html += "</div>";
+    return html;
+  }
+
   function intensiveHtml() {
     var courses = DATA.courses.filter(function (c) { return c.intensive; });
     if (!courses.length) return "";
@@ -632,12 +789,95 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     return html;
   }
 
+  // ---------------- 成績の分類・出席の現在状況 ----------------
+  var GRADE_CATS = [
+    { id: "final", label: "期末" },
+    { id: "assign", label: "課題（レポート）" },
+    { id: "attendance", label: "出席" },
+    { id: "other", label: "その他" }
+  ];
+  function hasAny(s, words) {
+    for (var i = 0; i < words.length; i++) { if (s.indexOf(words[i]) !== -1) return true; }
+    return false;
+  }
+  function gradeCategory(g) {
+    var s = String(g && g.label || "");
+    if (hasAny(s, ["出席", "参加", "平常", "取り組み", "積極性"])) return "attendance";
+    if (hasAny(s, ["レポート", "課題", "演習", "HW"])) return "assign";
+    if (hasAny(s, ["期末", "定期", "最終", "テスト", "試験"])) return "final";
+    return "other";
+  }
+  function attendanceProgress(c) {
+    if (!DATA || !c || c.intensive || c.day == null || !c.attendance || !c.attendance.tracked) return null;
+    if (attProgressCache.hasOwnProperty(c.id)) return attProgressCache[c.id];
+    var count = 0;
+    for (var d = DATA.term.start; d <= DATA.term.end; d = addDays(d, 1)) {
+      if (weekdayMon0(d) === c.day) count++;
+    }
+    var off = {};
+    var extra = 0;
+    DATA.exceptions.forEach(function (e) {
+      if (e.type === "makeup" && e.course_id === c.id) { extra++; return; }
+      if (e.type === "swap_day") {
+        if (c.day === weekdayMon0(e.date)) off[e.date] = true;
+        else if (e.weekday_as != null && c.day === e.weekday_as) {
+          var cancelled = DATA.exceptions.some(function (x) { return x.date === e.date && x.course_id === c.id && x.type === "cancel"; });
+          if (!cancelled) extra++;
+        }
+        return;
+      }
+      if (e.type === "cancel" && e.course_id === c.id) { off[e.date] = true; return; }
+      if (!e.course_id && (e.type === "holiday_off" || e.type === "holiday_unknown" || e.type === "cancel")) off[e.date] = true;
+    });
+    (c.attendance.cancelled_dates || []).forEach(function (ds) { off[ds] = true; });
+    Object.keys(off).forEach(function (ds) { if (weekdayMon0(ds) === c.day) count--; });
+    count += extra;
+    var att = c.attendance;
+    var res = count > 0 ? { total: count, elapsed: att.present + att.absent + att.unknown, present: att.present } : null;
+    attProgressCache[c.id] = res;
+    return res;
+  }
+  // 出席カテゴリで配点と現在状況が分かる項目は { earned, upper, prog } を返す
+  function attendanceScore(c, g) {
+    if (gradeCategory(g) !== "attendance" || g.points == null) return null;
+    var prog = attendanceProgress(c);
+    if (!prog) return null;
+    var earned = Math.round(g.points / prog.total * prog.present * 10) / 10;
+    var upper = Math.round(g.points / prog.total * prog.elapsed * 10) / 10;
+    earned = Math.min(g.points, earned);
+    return { earned: earned, upper: Math.min(g.points, Math.max(earned, upper)), prog: prog };
+  }
+  function attendanceProgressHtml(g, sc) {
+    return '<div class="gi-progress">現在 ' + sc.earned.toFixed(1) + "点 / 現時点の上限 " + sc.upper.toFixed(1) + "点（満点" + g.points + "点）</div>" +
+      '<div class="gi-progress-sub">出席 ' + sc.prog.present + "/" + sc.prog.elapsed + "回 ・ 全" + sc.prog.total + "回（推定）</div>";
+  }
+  // itemFn(g) が1項目分のHTMLを返す。空のグループは出さない
+  function groupedGradeItemsHtml(c, itemFn) {
+    var groups = {};
+    c.grading.forEach(function (g) {
+      var k = gradeCategory(g);
+      (groups[k] = groups[k] || []).push(g);
+    });
+    var html = "";
+    GRADE_CATS.forEach(function (cat) {
+      if (!groups[cat.id]) return;
+      html += '<div class="grade-group-h">' + cat.label + "</div>";
+      groups[cat.id].forEach(function (g) { html += itemFn(g); });
+    });
+    return html;
+  }
+  function fmtPts(n) { return Math.round(n) === n ? String(n) : n.toFixed(1); }
+
   function gradingBreakdownHtml(c) {
     var html = "<h4>成績の付け方</h4><p class=\"note\">" + esc(c.grading_summary) + "</p>";
-    c.grading.forEach(function (g) {
+    html += groupedGradeItemsHtml(c, function (g) {
+      var sc = attendanceScore(c, g);
       var pts = g.points == null ? "配点不明" : g.points + "点";
-      var est = g.est != null ? "（推定 " + g.est.toFixed(1) + "）" : "";
-      html += '<div class="grade-item"><div class="gi-head"><span>' + esc(g.label) + "</span><span>" + pts + est + "</span></div><div class=\"gi-basis\">" + esc(g.basis) + "</div></div>";
+      var estV = sc ? sc.earned : g.est;
+      var est = estV != null ? "（推定 " + estV.toFixed(1) + "）" : "";
+      return '<div class="grade-item"><div class="gi-head"><span>' + esc(g.label) + "</span><span>" + pts + est + "</span></div>" +
+        (sc ? attendanceProgressHtml(g, sc) : "") +
+        "<div class=\"gi-basis\">" + esc(g.basis) + "</div></div>";
     });
     return html;
   }
@@ -648,7 +888,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     var html = "<h4>この科目の課題</h4>";
     items.forEach(function (a) {
       var eff = assignmentEffective(a);
-      var label = eff.status === "submitted" ? "提出済み" : eff.status === "missed" ? "出し忘れ" : eff.status === "unknown" ? "要確認" : "未完了";
+      var label = statusLabel(eff.status);
       html += '<div class="grade-item"><div class="gi-head"><span>' + esc(a.title) + "</span><span>" + label + "</span></div></div>";
     });
     return html;
@@ -711,7 +951,9 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     if (variant !== "unknown" && eff.status === "missed") chips += '<span class="chip danger">出し忘れ</span>';
     var remainHtml = remain ? '<div class="a-remain' + (remain.urgent ? " urgent" : "") + '">' + esc(remain.text) + "</div>" : "";
     var checked = eff.status === "submitted" && eff.by === "app";
-    var checkHtml = '<div class="check-wrap"><button type="button" class="check' + (checked ? " on" : "") + '" data-act="toggle-submit" data-id="' + esc(a.id) + '" aria-label="提出した">' + CHECK_SVG + "</button></div>";
+    if (eff.by === "app" && eff.status !== "submitted") chips += '<span class="chip gray">アプリで変更中</span>';
+    var checkHtml = '<div class="a-actions">' + editBtnHtml(a) +
+      '<div class="check-wrap" style="padding-top:0"><button type="button" class="check' + (checked ? " on" : "") + '" data-act="toggle-submit" data-id="' + esc(a.id) + '" aria-label="提出した">' + CHECK_SVG + "</button></div></div>";
     return '<div class="assign-row' + (eff.status === "missed" && variant !== "unknown" ? " missed" : "") + (variant === "unknown" ? " unknown" : "") + '">' +
       '<div style="display:flex;gap:10px;">' +
       '<div class="grow"><div class="a-title">' + esc(a.title) + "</div>" +
@@ -723,11 +965,59 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
       "</div></div>";
   }
 
+  function editBtnHtml(a) {
+    return '<button type="button" class="mini-btn" data-act="edit-assign" data-id="' + esc(a.id) + '" aria-label="' + esc(a.title) + 'の状態を編集">編集</button>';
+  }
+
   function toggleSubmit(id) {
+    var a = assignmentById(id);
+    var eff = a ? assignmentEffective(a) : null;
+    var on = eff && eff.status === "submitted" && eff.by === "app";
+    if (on) delete state.statusFix[id];
+    else state.statusFix[id] = "submitted";
     if (state.submitted[id]) delete state.submitted[id];
-    else state.submitted[id] = new Date().toISOString();
     saveState();
     render();
+  }
+
+  function setAssignStatus(id, v) {
+    var a = assignmentById(id);
+    if (!a) return;
+    if (v === "revert") {
+      delete state.statusFix[id];
+    } else if (STATUS_FIX_VALUES[v]) {
+      if (v === a.status) delete state.statusFix[id];
+      else state.statusFix[id] = v;
+    } else {
+      return;
+    }
+    if (state.submitted[id]) delete state.submitted[id];
+    saveState();
+    closeSheet();
+    toast(v === "revert" ? "データの状態に戻しました" : statusLabel(v) + "にしました");
+    render();
+  }
+
+  function openAssignEdit(id) {
+    var a = assignmentById(id);
+    if (!a) return;
+    var c = courseById(a.course_id);
+    var eff = assignmentEffective(a);
+    var html = '<h3 id="sheetTitle">' + esc(a.title) + "</h3>";
+    html += '<div class="status-line"><span>科目</span><span>' + esc(c ? c.name : (a.course || "不明")) + "</span></div>";
+    html += '<div class="status-line"><span>締切</span><span>' + esc(a.due_label || "締切なし") + "</span></div>";
+    html += '<div class="status-line"><span>現在の状態</span><span>' + statusLabel(eff.status) + (eff.by === "app" ? "（アプリで変更中）" : "") + "</span></div>";
+    html += '<div class="status-line"><span>データ側の元の状態</span><span>' + statusLabel(a.status) + "</span></div>";
+    if (a.status_label) html += '<p class="note">' + esc(a.status_label) + "</p>";
+    html += '<div class="btn-col">';
+    [["submitted", "提出済みにする"], ["missed", "出し忘れにする"], ["open", "未提出に戻す"]].forEach(function (p) {
+      var same = eff.status === p[0];
+      html += '<button type="button" class="btn secondary" data-act="assign-set" data-id="' + esc(a.id) + '" data-v="' + p[0] + '"' + (same ? " disabled" : "") + ">" + p[1] + "</button>";
+    });
+    html += '<button type="button" class="btn secondary" data-act="assign-set" data-id="' + esc(a.id) + '" data-v="revert"' + (eff.by === "app" ? "" : " disabled") + ">アプリの変更を取り消す（データの状態に戻す）</button>";
+    html += '<button type="button" class="ghost" data-act="close-sheet">閉じる</button>';
+    html += "</div>";
+    openSheet(html);
   }
 
   function weeklyCardHtml() {
@@ -749,16 +1039,31 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
   }
 
   function copySubmittedForSato() {
-    var lines = [];
-    Object.keys(state.submitted).forEach(function (id) {
-      var a = DATA.assignments.filter(function (x) { return x.id === id; })[0];
-      if (!a) return;
+    var entries = [];
+    var FIX_TEXT = { submitted: "提出（アプリで変更）", missed: "出し忘れ（アプリで変更）", open: "未提出（アプリで変更）" };
+    function line(a, dateStr, text) {
       var c = courseById(a.course_id);
+      return dateStr + " " + (c ? c.short : "") + " " + a.title + " " + text;
+    }
+    Object.keys(state.submitted).forEach(function (id) {
+      if (state.statusFix[id]) return; // statusFix が優先される
+      var a = assignmentById(id);
+      if (!a) return;
+      var t = a.due ? new Date(a.due).getTime() : new Date(state.submitted[id]).getTime();
       var dateStr = a.due ? formatMD(ymd(new Date(a.due))) : formatMD(ymd(new Date(state.submitted[id])));
-      lines.push(dateStr + " " + (c ? c.short : "") + " " + a.title + " 提出");
+      entries.push({ t: t, text: line(a, dateStr, "提出") });
     });
-    if (!lines.length) { toast("まだ記録がありません"); return; }
-    copyText(lines.join("\n"), "コピーしました");
+    Object.keys(state.statusFix).forEach(function (id) {
+      var v = state.statusFix[id];
+      var a = assignmentById(id);
+      if (!a || !FIX_TEXT[v] || v === a.status) return;
+      var t = a.due ? new Date(a.due).getTime() : 0;
+      var dateStr = a.due ? formatMD(ymd(new Date(a.due))) : "締切なし";
+      entries.push({ t: t, text: line(a, dateStr, FIX_TEXT[v]) });
+    });
+    if (!entries.length) { toast("まだ記録がありません"); return; }
+    entries.sort(function (x, y) { return x.t - y.t; });
+    copyText(entries.map(function (e) { return e.text; }).join("\n"), "コピーしました");
   }
 
   function renderAssign() {
@@ -807,7 +1112,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     submitted.forEach(function (a) {
       var eff = assignmentEffective(a);
       var c = courseById(a.course_id);
-      html += '<div class="row"><div class="grow"><div class="row-title">' + esc(a.title) + '</div><div class="row-meta">' + esc(c ? c.short : "") + "　" + (eff.by === "app" ? "アプリで記録" : "佐藤の記録") + "</div></div></div>";
+      html += '<div class="row"><div class="grow"><div class="row-title">' + esc(a.title) + '</div><div class="row-meta">' + esc(c ? c.short : "") + "　" + (eff.by === "app" ? "アプリで記録" : "佐藤の記録") + "</div></div>" + editBtnHtml(a) + "</div>";
     });
     html += "</div></div>";
     html += '<div class="btn-row"><button type="button" class="btn secondary" data-act="copy-submitted">佐藤に渡す用にコピー</button></div>';
@@ -934,7 +1239,19 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
       if (g.points == null) return;
       knownTotal += g.points;
       var w = g.points;
-      if (g.status === "estimated" && g.est != null) {
+      var sc = attendanceScore(c, g);
+      if (sc) {
+        // 出席: 獲得＝確保、上限−獲得＝失点、満点−上限＝未確定
+        hasEst = true;
+        var aLost = sc.upper - sc.earned;
+        var aRest = Math.max(0, g.points - sc.upper);
+        estSum += sc.earned;
+        lostSum += aLost;
+        undetKnownSum += aRest;
+        if (sc.earned > 0) segs += '<div class="seg-est" style="width:' + sc.earned + '%"></div>';
+        if (aLost > 0) segs += '<div class="seg-lost" style="width:' + aLost + '%"></div>';
+        if (aRest > 0) segs += '<div class="seg-undet" style="width:' + aRest + '%"></div>';
+      } else if (g.status === "estimated" && g.est != null) {
         hasEst = true;
         estSum += g.est;
         var lost = Math.max(0, g.points - g.est);
@@ -948,15 +1265,18 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     });
     var html2 = '<div class="grade-bar">' + segs + "</div>";
     if (hasEst) {
-      html2 += '<div class="grade-sum"><span>確保（推定）' + estSum.toFixed(1) + " ・ 失点（推定）" + lostSum.toFixed(1) + " ・ 未確定 " + undetKnownSum + "</span></div>";
+      html2 += '<div class="grade-sum"><span>確保（推定）' + estSum.toFixed(1) + " ・ 失点（推定）" + lostSum.toFixed(1) + " ・ 未確定 " + fmtPts(Math.round(undetKnownSum * 10) / 10) + "</span></div>";
     } else {
       html2 += '<div class="grade-sum"><span>全部未確定（' + knownTotal + "）</span></div>";
     }
     html2 += '<div class="grade-list">';
-    c.grading.forEach(function (g) {
+    html2 += groupedGradeItemsHtml(c, function (g) {
+      var sc = attendanceScore(c, g);
       var pts = g.points == null ? "配点不明" : g.points + "点";
-      var estTxt = g.status === "estimated" ? (g.est != null ? "推定 " + g.est.toFixed(1) : "推定") : "未確定";
-      html2 += '<div class="grade-item"><div class="gi-head"><span>' + esc(g.label) + "</span><span>" + pts + "・" + estTxt + "</span></div><div class=\"gi-basis\">" + esc(g.basis) + "</div></div>";
+      var estTxt = sc ? "推定 " + sc.earned.toFixed(1) : g.status === "estimated" ? (g.est != null ? "推定 " + g.est.toFixed(1) : "推定") : "未確定";
+      return '<div class="grade-item"><div class="gi-head"><span>' + esc(g.label) + "</span><span>" + pts + "・" + estTxt + "</span></div>" +
+        (sc ? attendanceProgressHtml(g, sc) : "") +
+        "<div class=\"gi-basis\">" + esc(g.basis) + "</div></div>";
     });
     html2 += "</div>";
     return html2;
@@ -1019,7 +1339,7 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     openSheet(html);
   }
   function clearAllRecords() {
-    state = { submitted: {}, attendance: {}, theme: "system" };
+    state = { submitted: {}, attendance: {}, statusFix: {}, theme: "system" };
     saveState();
     applyTheme();
     closeSheet();
@@ -1092,6 +1412,24 @@ table.timetable td.now-col { box-shadow: inset 0 0 0 1.5px var(--accent); }
     if (act === "open-course") { openCourseSheet(t.getAttribute("data-course")); return; }
     if (act === "toggle-submit") { toggleSubmit(t.getAttribute("data-id")); return; }
     if (act === "copy-submitted") { copySubmittedForSato(); return; }
+    if (act === "edit-assign") { openAssignEdit(t.getAttribute("data-id")); return; }
+    if (act === "assign-set") { if (!t.disabled) setAssignStatus(t.getAttribute("data-id"), t.getAttribute("data-v")); return; }
+    if (act === "cal-month") {
+      var delta = Number(t.getAttribute("data-delta"));
+      calMonth = shiftMonth(calMonthStr(), delta);
+      calSelected = TODAY.slice(0, 7) === calMonth ? TODAY : calMonth + "-01";
+      render();
+      var nb = document.querySelector('#page-schedule [data-act="cal-month"][data-delta="' + delta + '"]');
+      if (nb) nb.focus();
+      return;
+    }
+    if (act === "cal-day") {
+      calSelected = t.getAttribute("data-date");
+      render();
+      var db = document.querySelector('#page-schedule [data-act="cal-day"][data-date="' + calSelected + '"]');
+      if (db) db.focus();
+      return;
+    }
     if (act === "copy-attendance") { copyAttendanceForSato(); return; }
     if (act === "mark-att") { setAttendance(todayAttDateStr(), t.getAttribute("data-course"), t.getAttribute("data-v")); return; }
     if (act === "att-day") { attViewDate = addDays(todayAttDateStr(), Number(t.getAttribute("data-delta"))); render(); return; }
