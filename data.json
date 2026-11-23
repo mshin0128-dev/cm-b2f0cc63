@@ -1,10 +1,10 @@
 {
   "version": "2026.11.20b",
-  "generated_at": "2026-11-23T08:23:46+09:00",
-  "generated_label": "11/23 08:23",
+  "generated_at": "2026-11-23T12:26:51+09:00",
+  "generated_label": "11/23 12:26",
   "source": {
     "path_label": "佐藤の授業管理トラッカー",
-    "md_mtime": "2026-11-23T08:23:17+09:00",
+    "md_mtime": "2026-11-23T12:26:32+09:00",
     "assignments_note": "11/13 12:16 KULMS確認"
   },
   "attendance_source": {
@@ -1069,8 +1069,8 @@
       "due": "2026-11-23T13:15:00+09:00",
       "due_label": "11/23(月) 13:15",
       "in_class": false,
-      "status": "open",
-      "status_label": "【未提出】（11/23 8:22 KULMSで確認、OPEN・未開始）",
+      "status": "submitted",
+      "status_label": "提出済み（KULMS 11/23 12:26）",
       "kind": "homework",
       "source": "table"
     },
