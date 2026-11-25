@@ -1,10 +1,10 @@
 {
   "version": "2026.11.20b",
-  "generated_at": "2026-11-23T12:26:51+09:00",
-  "generated_label": "11/23 12:26",
+  "generated_at": "2026-11-25T16:44:36+09:00",
+  "generated_label": "11/25 16:44",
   "source": {
     "path_label": "佐藤の授業管理トラッカー",
-    "md_mtime": "2026-11-23T12:26:32+09:00",
+    "md_mtime": "2026-11-25T16:44:22+09:00",
     "assignments_note": "11/13 12:16 KULMS確認"
   },
   "attendance_source": {
@@ -22,7 +22,7 @@
       "stat_intro"
     ],
     "unmatched": [],
-    "note": "11/20 14:10時点。紳さんの申告を受けるたびに佐藤が更新する。森のアプリはこの表を読む。"
+    "note": "11/25 16:45時点。紳さんの申告を受けるたびに佐藤が更新する。森のアプリはこの表を読む。"
   },
   "term": {
     "start": "2026-10-01",
@@ -277,7 +277,7 @@
         "cancelled_dates": [
           "2026-11-03"
         ],
-        "note": "フォーム提出を出席とする。11/3祝日休講",
+        "note": "フォーム提出を出席とする。11/3祝日休講、11/24授業なし",
         "source": "md_table"
       },
       "scores": [],
@@ -449,7 +449,7 @@
           "label": "授業内演習",
           "points": 20,
           "status": "estimated",
-          "est": 10.0,
+          "est": 8.6,
           "basis": "演習は休むと出せないため出席率で推定。不明1回は除外"
         }
       ],
@@ -457,13 +457,14 @@
       "attendance": {
         "tracked": true,
         "present": 3,
-        "absent": 3,
+        "absent": 4,
         "unknown": 1,
         "present_note": null,
         "absent_dates": [
           "2026-10-07",
           "2026-10-14",
-          "2026-11-18"
+          "2026-11-18",
+          "2026-11-25"
         ],
         "unknown_dates": [
           "2026-11-11"
@@ -519,7 +520,7 @@
       "grading_total_known": true,
       "attendance": {
         "tracked": true,
-        "present": 7,
+        "present": 8,
         "absent": 0,
         "unknown": 0,
         "present_note": null,
@@ -1101,29 +1102,16 @@
       "source": "table"
     },
     {
-      "id": "de0d4033aa72",
+      "id": "5d41db3a759f",
       "course_id": "undo_kagaku",
       "course": "運動科学Ⅰ",
-      "title": "授業内テスト（来週と申告）",
+      "title": "授業内テスト（テスト・クイズ2回目）",
       "due": "2026-11-25T15:00:00+09:00",
       "due_label": "11/25(水) 4限 授業内（確定）",
       "in_class": true,
-      "status": "open",
-      "status_label": "未受験",
-      "kind": "test",
-      "source": "table"
-    },
-    {
-      "id": "2ccf12ded4be",
-      "course_id": "kenchiku_seisan",
-      "course": "建築生産Ⅱ",
-      "title": "質問・コメント票フォーム（11/24分）",
-      "due": "2026-11-25T23:59:00+09:00",
-      "due_label": "11/25(水) 23:59",
-      "in_class": false,
-      "status": "open",
-      "status_label": "未提出",
-      "kind": "form",
+      "status": "submitted",
+      "status_label": "受験済み（紳さん申告 11/25 16:43、自己採点9/10くらい）",
+      "kind": "quiz",
       "source": "table"
     },
     {
