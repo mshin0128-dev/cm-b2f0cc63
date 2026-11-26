@@ -1,11 +1,11 @@
 {
   "version": "2026.11.20b",
-  "generated_at": "2026-11-25T16:44:36+09:00",
-  "generated_label": "11/25 16:44",
+  "generated_at": "2026-11-26T12:27:51+09:00",
+  "generated_label": "11/26 12:27",
   "source": {
     "path_label": "佐藤の授業管理トラッカー",
-    "md_mtime": "2026-11-25T16:44:22+09:00",
-    "assignments_note": "11/13 12:16 KULMS確認"
+    "md_mtime": "2026-11-26T12:27:30+09:00",
+    "assignments_note": "11/26 12:27 KULMS確認"
   },
   "attendance_source": {
     "table_found": true,
@@ -1154,6 +1154,19 @@
       "source": "table"
     },
     {
+      "id": "a2274afb27d2",
+      "course_id": "onnetsu",
+      "course": "建築温熱環境設計",
+      "title": "レポート課題（担当：小椋、KULMS課題）",
+      "due": "2026-12-03T12:00:00+09:00",
+      "due_label": "12/3(木) 12:00",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出（11/26 KULMS確認で新規・OPEN・未開始。受付終了は12/4(金) 17:00）",
+      "kind": "report",
+      "source": "table"
+    },
+    {
       "id": "79cdc6723069",
       "course_id": "stat_intro",
       "course": "統計入門",
@@ -1162,7 +1175,7 @@
       "due_label": "12/4(金) 23:30",
       "in_class": false,
       "status": "open",
-      "status_label": "未提出（11/13 8:45公開、OPEN。PDF提出・再提出可）",
+      "status_label": "未提出（11/13 8:45公開、OPEN。11/26 KULMSで締切12/4 23:30確定・受付終了23:35。PDF提出・再提出可）",
       "kind": "report",
       "source": "table"
     },
