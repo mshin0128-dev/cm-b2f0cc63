@@ -1,11 +1,11 @@
 {
   "version": "2026.11.20b",
-  "generated_at": "2026-11-26T12:27:51+09:00",
-  "generated_label": "11/26 12:27",
+  "generated_at": "2026-11-27T16:24:15+09:00",
+  "generated_label": "11/27 16:24",
   "source": {
     "path_label": "佐藤の授業管理トラッカー",
-    "md_mtime": "2026-11-26T12:27:30+09:00",
-    "assignments_note": "11/26 12:27 KULMS確認"
+    "md_mtime": "2026-11-27T16:24:02+09:00",
+    "assignments_note": "11/27 16:23 KULMS確認"
   },
   "attendance_source": {
     "table_found": true,
@@ -1138,6 +1138,19 @@
       "status": "open",
       "status_label": "未提出",
       "kind": "homework",
+      "source": "table"
+    },
+    {
+      "id": "3ddc3d6b0f31",
+      "course_id": "stat_intro",
+      "course": "統計入門",
+      "title": "第7回リアクションペーパー（KULMS課題）",
+      "due": "2026-12-01T23:30:00+09:00",
+      "due_label": "12/1(火) 23:30",
+      "in_class": false,
+      "status": "open",
+      "status_label": "未提出（11/27 KULMS確認で新規・OPEN。受付終了23:35）",
+      "kind": "report",
       "source": "table"
     },
     {
