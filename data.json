@@ -1,10 +1,10 @@
 {
   "version": "2026.11.20b",
-  "generated_at": "2026-11-27T16:24:15+09:00",
-  "generated_label": "11/27 16:24",
+  "generated_at": "2026-11-28T01:02:25+09:00",
+  "generated_label": "11/28 01:02",
   "source": {
     "path_label": "佐藤の授業管理トラッカー",
-    "md_mtime": "2026-11-27T16:24:02+09:00",
+    "md_mtime": "2026-11-28T01:01:49+09:00",
     "assignments_note": "11/27 16:23 KULMS確認"
   },
   "attendance_source": {
@@ -22,7 +22,7 @@
       "stat_intro"
     ],
     "unmatched": [],
-    "note": "11/25 16:45時点。紳さんの申告を受けるたびに佐藤が更新する。森のアプリはこの表を読む。"
+    "note": "11/28 1:01時点。紳さんの申告を受けるたびに佐藤が更新する。森のアプリはこの表を読む。"
   },
   "term": {
     "start": "2026-10-01",
@@ -449,7 +449,7 @@
           "label": "授業内演習",
           "points": 20,
           "status": "estimated",
-          "est": 8.6,
+          "est": 7.5,
           "basis": "演習は休むと出せないため出席率で推定。不明1回は除外"
         }
       ],
@@ -457,20 +457,19 @@
       "attendance": {
         "tracked": true,
         "present": 3,
-        "absent": 4,
-        "unknown": 1,
+        "absent": 5,
+        "unknown": 0,
         "present_note": null,
         "absent_dates": [
           "2026-10-07",
           "2026-10-14",
+          "2026-11-11",
           "2026-11-18",
           "2026-11-25"
         ],
-        "unknown_dates": [
-          "2026-11-11"
-        ],
+        "unknown_dates": [],
         "cancelled_dates": [],
-        "note": null,
+        "note": "11/11は授業内課題（演習）も未提出",
         "source": "md_table"
       },
       "scores": [],
