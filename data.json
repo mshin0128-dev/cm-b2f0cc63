@@ -1,10 +1,10 @@
 {
   "version": "2026.11.20b",
-  "generated_at": "2026-11-28T01:02:25+09:00",
-  "generated_label": "11/28 01:02",
+  "generated_at": "2026-11-28T20:06:21+09:00",
+  "generated_label": "11/28 20:06",
   "source": {
     "path_label": "佐藤の授業管理トラッカー",
-    "md_mtime": "2026-11-28T01:01:49+09:00",
+    "md_mtime": "2026-11-28T20:05:51+09:00",
     "assignments_note": "11/27 16:23 KULMS確認"
   },
   "attendance_source": {
@@ -1121,8 +1121,8 @@
       "due": "2026-11-29T23:55:00+09:00",
       "due_label": "11/29(日) 23:55",
       "in_class": false,
-      "status": "open",
-      "status_label": "未提出（11/13確認で公開・受験可能）",
+      "status": "submitted",
+      "status_label": "提出済み（紳さん申告 11/28 20:05、高橋経由）",
       "kind": "quiz",
       "source": "table"
     },
