@@ -1,11 +1,11 @@
 {
   "version": "2026.11.20b",
-  "generated_at": "2026-11-28T20:06:21+09:00",
-  "generated_label": "11/28 20:06",
+  "generated_at": "2026-11-28T20:07:06+09:00",
+  "generated_label": "11/28 20:07",
   "source": {
     "path_label": "佐藤の授業管理トラッカー",
-    "md_mtime": "2026-11-28T20:05:51+09:00",
-    "assignments_note": "11/27 16:23 KULMS確認"
+    "md_mtime": "2026-11-28T20:06:33+09:00",
+    "assignments_note": "11/28 20:06 KULMS確認"
   },
   "attendance_source": {
     "table_found": true,
